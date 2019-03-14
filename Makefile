@@ -1,8 +1,5 @@
-Binomial: Binomial.o
-	g++ -g -o Binomial Binomial.o
-
-Binomial.o: Binomial.cpp
-	g++ -g -c Binomial.cpp
+Binomial: Binomial.c
+	gcc -o Binomial Binomial.c -lm
 
 clean:
-	rm -f Binomial Binomial.o
+	rm -f Binomial
