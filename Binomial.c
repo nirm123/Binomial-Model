@@ -45,7 +45,7 @@ double binomial(char option, double k, double t, double s, double sigma, double 
 
 	/* For loop to initialize array with last interval data */
 	for (i = 0; i < n + 1; i++) {
-		/* Implementation of stock price at node formula*/
+		/* Stock price at node formula*/
 		f[i] = pow(u, i) * pow(d, n - i) * s;
 
 		/* Calculate payoff if put option */
@@ -66,16 +66,27 @@ double binomial(char option, double k, double t, double s, double sigma, double 
 
 	/* For loop to complete backwards induction */
 	for (i = n; i > 0; i--) {
+		/* Loop through intercal */
 		for (j = 0; j < i; j++) {
+			/* Risk neutral pricing formula */
 			f[j] = exp(-1 * r * delta) * ((p * f[j+1]) + (1 - p) * f[j]);
+			
+			/* If American option, need to check if early_exercis is optimal */
 			if (exercise == 'A' || exercise == 'a') {
+				/* Stock price at node formula */
 				early_exercise = pow(u, j) * pow(d, i - j - 1) * s;
+
+				/* Calculate payoff if put option */
 				if (option == 'P' || option == 'p') {
 					early_exercise = k - early_exercise;
 				}
+
+				/* Calculate payoff if call option */
 				if (option == 'C' || option == 'c') {
 					early_exercise = early_exercise - k;
 				}
+
+				/* If early exercise payoff is greater, choose early exercise */
 				if (early_exercise > f[j]) {
 					f[j] = early_exercise;
 				}			
@@ -83,9 +94,11 @@ double binomial(char option, double k, double t, double s, double sigma, double 
 		}
 	}
 
+	/* Return option price */
 	return f[0];
 }
 
+/* main */
 int main(void) {
 	clock_t begin = clock();
 	double temp = binomial('P', 5, 2, 4, 0.2, log(1.25), 0, 2, 'A');
