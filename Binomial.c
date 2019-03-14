@@ -5,32 +5,66 @@
 #define true 1
 #define false 0
 
+/*
+ * binomial
+ *   DESCRIPTION: Uses the binomial model to generate accurate call/put price
+ *   INPUTS: option - P: Put option
+ *   		      C: Call option
+ *   	     k - Strike price
+ *   	     t - Time period
+ *   	     s - Asset price (current)
+ *   	     sigma - Volatility
+ *   	     r - Risk free interest rate
+ *   	     q - Asset yield
+ *   	     n - Number of steps (intervals) for model
+ *   	     exercise - E: European option
+ *   	                A: American option
+ *   OUTPUTS: Option price
+ *   RETURN VALUE: Double representing the option price
+ *   SIDE EFFECTS: None
+ */
 double binomial(char option, double k, double t, double s, double sigma, double r, double q, int n, char exercise) {
+	/* Calculate delta - time per interval */
 	double delta = t/n;
-	//double u = exp(sigma * sqrt(delta));
-	//double d = exp(-1 * sigma * sqrt(delta));
-	double u = 2;
-	double d = 0.5;
+	
+	/* Calculate u and d base on Cox-Ross-Rubinstein binomial model */
+	double u = exp(sigma * sqrt(delta));
+	double d = exp(-1 * sigma * sqrt(delta));
+	
+	/* Calculate risk neautral probability */
 	double p = (exp((r - q) * delta) - d)/(u - d);
 	
+	/* Declare array for storing forward prices */
 	double f[n + 1];
 
+	/* Declare variables for loop */
 	int i, j;
+
+	/* Declare variable for calculating early exercise payoffs for American options */
 	double early_exercise;
 
+	/* For loop to initialize array with last interval data */
 	for (i = 0; i < n + 1; i++) {
+		/* Implementation of stock price at node formula*/
 		f[i] = pow(u, i) * pow(d, n - i) * s;
+
+		/* Calculate payoff if put option */
 		if (option == 'P' || option == 'p') {
 			f[i] = k - f[i];
 		}
+
+		/* Calculate payoff if call option */
 		if (option == 'C' || option == 'c') {
 			f[i] = f[i] - k;
 		}
+
+		/* Payoff always greater than 0 */
 		if (f[i] < 0) {
 			f[i] = 0;
 		}
 	}
 
+	/* For loop to complete backwards induction */
 	for (i = n; i > 0; i--) {
 		for (j = 0; j < i; j++) {
 			f[j] = exp(-1 * r * delta) * ((p * f[j+1]) + (1 - p) * f[j]);
