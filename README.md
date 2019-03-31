@@ -1,2 +1,2 @@
 # IE420
-IE420 Project
+IE420 (Financial Engineering) code for homeworks and projects.
