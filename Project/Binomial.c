@@ -113,7 +113,8 @@ int main(void) {
 	end = clock();
 	
 	printf("Price: %f\n", option_price);
-	printf("S*(10): %f\n", option_price - (strike_price - stock_price));
+	printf("S*(10): %f\n", stock_price);
+	printf("Difference: %f\n", option_price - (strike_price - stock_price));
 	printf("Time: %f\n\n", (double)(end-begin) / CLOCKS_PER_SEC);
 
 	/* Prelim 2 */
@@ -125,7 +126,8 @@ int main(void) {
 	end = clock();
 	
 	printf("Price: %f\n", option_price);
-	printf("S*(10): %f\n", option_price - (stock_price - strike_price));
+	printf("S*(10): %f\n", stock_price);
+	printf("Difference: %f\n", option_price - (stock_price - strike_price));
 	printf("Time: %f\n\n", (double)(end-begin) / CLOCKS_PER_SEC);
 	return 0;
 }
