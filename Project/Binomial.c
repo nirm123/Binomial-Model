@@ -105,6 +105,7 @@ int main(void) {
 	clock_t begin, end;
 
 	/* Prelim 1 */
+	/*
 	stock_price = 75.54;
 	strike_price = 100;
 	time = (double) 10/12;
@@ -116,8 +117,10 @@ int main(void) {
 	printf("S*(10): %f\n", stock_price);
 	printf("Difference: %f\n", option_price - (strike_price - stock_price));
 	printf("Time: %f\n\n", (double)(end-begin) / CLOCKS_PER_SEC);
+	*/
 
 	/* Prelim 2 */
+	/*
 	stock_price = 148.83;
 	strike_price = 100;
 	time = (double) 10/12;
@@ -129,5 +132,38 @@ int main(void) {
 	printf("S*(10): %f\n", stock_price);
 	printf("Difference: %f\n", option_price - (stock_price - strike_price));
 	printf("Time: %f\n\n", (double)(end-begin) / CLOCKS_PER_SEC);
+	*/
+
+	/* Project 2 */
+	/*
+	stock_price = 100;
+	strike_price = 100;
+	time = 1;
+	begin = clock();
+	option_price = binomial('C', strike_price, time, stock_price, 0.2, 0.05, 0.04, 50000, 'E');
+	end = clock();
+	
+	printf("Price: %f\n", option_price);
+	printf("Time: %f\n\n", (double)(end-begin) / CLOCKS_PER_SEC);	
+	*/
+
+	/* Project 3 */
+	/*
+	stock_price = 91.30;
+	strike_price = 100;
+	time = (double) 1/12;
+	begin = clock();
+	option_price = binomial('P', strike_price, time, stock_price, 0.2, 0.05, 0, 5000, 'A');
+	end = clock();
+	
+	printf("Price: %f\n", option_price);
+	printf("S*(10): %f\n", stock_price);
+	printf("Difference: %f\n", option_price - (strike_price - stock_price));
+	printf("Time: %f\n\n", (double)(end-begin) / CLOCKS_PER_SEC);
+	*/
+
+	/* Project 4 */
+
+
 	return 0;
 }
